@@ -30,13 +30,26 @@
             <h2>What's This Meetup About?</h2>
             <p>{{ meetup.description }}</p>
             <footer>
-              <p>Need more details? Please <a href="">contact the organizer</a> (but don't spam us ;-)).</p>
+              <p>Need more details? Please <a href="mailto:{{ meetup.organizer_email }}">contact the organizer</a> (but don't spam us ;-)).</p>
             </footer>
           </section>
 
           <section id="registration">
-            <h2>Join Us!</h2>
-            FORM
+              <h2>Join Us!</h2>
+                <form action="{% url 'detail' meetup.slug %}" method="POST">
+                {% csrf_token %}
+{#                    {{ form.label_tag}}#}
+                    {% for f in form %}
+                        {{ f.label_tag }}
+                        {{ f }}
+                        {{ f.errors }}
+                    {% endfor %}
+                    <div id="registration-actions">
+                        <button type="submit">send!</button>
+                    </div>
+
+                </form>
+
           </section>
         </article>
     {% endblock %}
